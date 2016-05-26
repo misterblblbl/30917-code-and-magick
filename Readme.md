@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Александра Годун](https://up.htmlacademy.ru/javascript/5/user/30917).
-* Наставник: `Неизвестно`.
+* Наставник: `нет`.
 
 ---
 
