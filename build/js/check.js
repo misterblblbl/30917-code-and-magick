@@ -3,7 +3,7 @@
 // Проанализировать параметры и вывести соответствующее сообщение-строку
 function getMessage(a, b) {
   if (typeof a == 'boolean') {
-    if(a == true) {
+    if(a) {
       return 'Я попал в ' + b + ' .';
     } else  {
       return 'Я никуда не попал';

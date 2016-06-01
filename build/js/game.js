@@ -378,18 +378,82 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+
+      /**
+       * Отрисовка окна длиной width и высторой height, в которое будет выводиться сообщение.
+       */
+      var drawMessageWindow = function(ctx, width, height, coordinateX, coordinateY, messageText) {
+        var shadowOffset = 10;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.beginPath();
+        ctx.moveTo(coordinateX, coordinateY);
+        ctx.lineTo(coordinateX + width, coordinateY);
+        ctx.lineTo(coordinateX + width, coordinateY + height);
+        ctx.lineTo(coordinateX - 30, coordinateY + height * 1.5);
+        ctx.lineTo(coordinateX, coordinateY);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(coordinateX - shadowOffset, coordinateY - shadowOffset);
+        ctx.lineTo(coordinateX - shadowOffset + width, coordinateY - shadowOffset);
+        ctx.lineTo(coordinateX - shadowOffset + width, coordinateY - shadowOffset + height);
+        ctx.lineTo(coordinateX - 30 - shadowOffset, coordinateY - shadowOffset + height * 1.5);
+        ctx.lineTo(coordinateX - shadowOffset, coordinateY - shadowOffset);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'black';
+        ctx.font = '16px PT Mono';
+
+        var lineNumber = drawMessage(messageText, width * 0.8, 16, coordinateX, coordinateY, ctx);
+        console.log(lineNumber);
+      };
+
+      var drawMessage = function(message, width, fontSize, coordinateX, coordinateY, context) {
+        var lettersInLine = Math.floor(width / (fontSize / 2));
+        var endOfLine = 0;
+        var beginningOfLine = 0;
+
+        for (var lineNumber = 0; lineNumber <= Math.ceil(message.length / lettersInLine); lineNumber++ ) {
+          if (message.length - endOfLine > lettersInLine) {
+            endOfLine = message.slice(0, beginningOfLine + lettersInLine).lastIndexOf(' ') + 1;
+            context.fillText(message.slice(beginningOfLine, endOfLine), coordinateX, coordinateY + 20 + lineNumber * 32);
+            beginningOfLine = endOfLine;
+          } else {
+            context.fillText(message.slice(endOfLine, message.length), coordinateX, coordinateY + 20 + lineNumber * 32);
+            lineNumber++;
+            break;
+          }
+        }
+        return lineNumber;
+      };
+
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          drawMessageWindow(this.ctx,
+            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width / 2, this.canvas.height * 0.1,
+            'Поздравляю! Вы победили!');
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          drawMessageWindow(this.ctx,
+            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width / 2, this.canvas.height * 0.1,
+            'Ой :-( Вы проиграли. Нажмите пробел, чтобы попробовать ещё раз.');
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          drawMessageWindow(this.ctx,
+            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width / 2, this.canvas.height * 0.1,
+            'Игра на паузе');
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          drawMessageWindow(this.ctx,
+            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width / 2, this.canvas.height * 0.1,
+            'Добро пожаловать в «Код и магию»! Нажмите пробел, чтобы начать игру');
           break;
       }
     },
