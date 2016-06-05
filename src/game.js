@@ -407,8 +407,7 @@
         ctx.fillStyle = 'black';
         ctx.font = '16px PT Mono';
 
-        var lineNumber = drawMessage(messageText, width * 0.8, 16, coordinateX, coordinateY, ctx);
-        console.log(lineNumber);
+        drawMessage(messageText, width * 0.8, 16, coordinateX, coordinateY, ctx);
       };
 
       var drawMessage = function(message, width, fontSize, coordinateX, coordinateY, context) {
@@ -427,7 +426,6 @@
             break;
           }
         }
-        return lineNumber;
       };
 
       switch (this.state.currentStatus) {
