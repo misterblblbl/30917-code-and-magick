@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+  var browserCookies = require('browser-cookies');
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -16,6 +17,13 @@
   var ratingForm = document.querySelector('.review-form-group-mark');
   var MIN_RATING = 3;
   var isLowRating;
+
+  var now = new Date();
+  var MY_BIRTHDAY_DATE = {
+    day: 9,
+    month: 5
+  };
+  var DAYS_IN_MILISECONDS = 1000 * 60 * 60 * 24;
 
   //Проверка рейтинга, если рейтинг отрицательный, то значение переменной isLowRating устанавливается в true
   var checkRating = function() {
@@ -36,6 +44,22 @@
     return field.value !== '';
   };
 
+  //Получить количество дней, прошедшее с последнего дня рождения
+  var getExpirationDate = function() {
+    var myLastBirthday;
+    if(now < new Date(now.getFullYear(), MY_BIRTHDAY_DATE.month, MY_BIRTHDAY_DATE.day)) {
+      myLastBirthday = new Date(now.getFullYear() - 1, MY_BIRTHDAY_DATE.month, MY_BIRTHDAY_DATE.day);
+    } else {
+      myLastBirthday = new Date(now.getFullYear() - 1, MY_BIRTHDAY_DATE.month, MY_BIRTHDAY_DATE.day);
+    }
+    return Math.ceil((now - myLastBirthday) / DAYS_IN_MILISECONDS);
+  };
+
+  var getPreviousReview = function() {
+    nameField.value = browserCookies.get('userName');
+    reviewField.value = browserCookies.get('reviewText');
+  };
+
   //Поле "Имя" всегда обязательное
   nameField.required = true;
   reviewField.required = isLowRating && !(reviewField.value);
@@ -48,7 +72,7 @@
     reviewLinksText.classList.toggle('invisible', !isLowRating);
   };
 
-  form.oninput = function() {
+  var checkFormValidity = function() {
     //Проверить рейтинг
     checkRating();
 
@@ -69,6 +93,15 @@
     }
   };
 
+  form.oninput = function() {
+    checkFormValidity();
+  };
+
+  form.onsubmit = function() {
+    browserCookies.set('userName', nameField.value, {expires: getExpirationDate()});
+    browserCookies.set('reviewText', reviewField.value, {expires: getExpirationDate()});
+  };
+
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
@@ -78,4 +111,11 @@
     evt.preventDefault();
     formContainer.classList.add('invisible');
   };
+
+  //Как только документ загружен — получить данные из cookies и добавить в форму
+  window.addEventListener('load', function() {
+    getPreviousReview();
+    checkFormValidity();
+  });
+
 })();
