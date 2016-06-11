@@ -382,14 +382,19 @@
       /**
        * Отрисовка окна длиной width и высторой height, в которое будет выводиться сообщение.
        */
-      var drawMessageWindow = function(ctx, width, height, coordinateX, coordinateY, messageText) {
+      var drawMessageWindow = function(ctx, width, coordinateX, coordinateY, messageText) {
+        ctx.font = '16px PT Mono';
+        var fontSize = parseInt(ctx.font);
+        var messageArr = calculateLines(messageText, fontSize, width * 0.85);
+        var height = fontSize * 1.5 + fontSize * 2 * messageArr.length;
+
         var shadowOffset = 10;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
         ctx.beginPath();
         ctx.moveTo(coordinateX, coordinateY);
         ctx.lineTo(coordinateX + width, coordinateY);
         ctx.lineTo(coordinateX + width, coordinateY + height);
-        ctx.lineTo(coordinateX - 30, coordinateY + height * 1.5);
+        ctx.lineTo(coordinateX - 25, coordinateY + height * 1.4);
         ctx.lineTo(coordinateX, coordinateY);
         ctx.closePath();
         ctx.fill();
@@ -399,59 +404,61 @@
         ctx.moveTo(coordinateX - shadowOffset, coordinateY - shadowOffset);
         ctx.lineTo(coordinateX - shadowOffset + width, coordinateY - shadowOffset);
         ctx.lineTo(coordinateX - shadowOffset + width, coordinateY - shadowOffset + height);
-        ctx.lineTo(coordinateX - 30 - shadowOffset, coordinateY - shadowOffset + height * 1.5);
+        ctx.lineTo(coordinateX - 25 - shadowOffset, coordinateY - shadowOffset + height * 1.4);
         ctx.lineTo(coordinateX - shadowOffset, coordinateY - shadowOffset);
         ctx.closePath();
         ctx.fill();
 
         ctx.fillStyle = 'black';
-        ctx.font = '16px PT Mono';
-
-        drawMessage(messageText, width * 0.8, 16, coordinateX, coordinateY, ctx);
+        messageArr.forEach(function(line, lineNumber) {
+          ctx.fillText(line, coordinateX, coordinateY + 20 + lineNumber * 32);
+        });
       };
 
-      var drawMessage = function(message, width, fontSize, coordinateX, coordinateY, context) {
-        var lettersInLine = Math.floor(width / (fontSize / 2));
+      var calculateLines = function(message, fontSize, width) {
+        var letterWidth = fontSize / 2;
+        var lettersInLine = Math.floor(width / letterWidth);
         var endOfLine = 0;
         var beginningOfLine = 0;
+        var splittedMessage = [];
 
-        for (var lineNumber = 0; lineNumber <= Math.ceil(message.length / lettersInLine); lineNumber++ ) {
-          if (message.length - endOfLine > lettersInLine) {
+        for (var lineNumber = 0; lineNumber <= Math.ceil(message.length / lettersInLine); lineNumber++) {
+          if(message.length - endOfLine > lettersInLine) {
             endOfLine = message.slice(0, beginningOfLine + lettersInLine).lastIndexOf(' ') + 1;
-            context.fillText(message.slice(beginningOfLine, endOfLine), coordinateX, coordinateY + 20 + lineNumber * 32);
+            splittedMessage.push(message.slice(beginningOfLine, endOfLine));
             beginningOfLine = endOfLine;
           } else {
-            context.fillText(message.slice(endOfLine, message.length), coordinateX, coordinateY + 20 + lineNumber * 32);
-            lineNumber++;
+            splittedMessage.push(message.slice(endOfLine, message.length));
             break;
           }
         }
+        return splittedMessage;
       };
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           drawMessageWindow(this.ctx,
-            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width * 0.4,
             this.canvas.width / 2, this.canvas.height * 0.1,
             'Поздравляю! Вы победили!');
           break;
         case Verdict.FAIL:
           drawMessageWindow(this.ctx,
-            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width * 0.4,
             this.canvas.width / 2, this.canvas.height * 0.1,
             'Ой :-( Вы проиграли. Нажмите пробел, чтобы попробовать ещё раз.');
           break;
         case Verdict.PAUSE:
           drawMessageWindow(this.ctx,
-            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width * 0.4,
             this.canvas.width / 2, this.canvas.height * 0.1,
             'Игра на паузе');
           break;
         case Verdict.INTRO:
           drawMessageWindow(this.ctx,
-            this.canvas.width * 0.4, this.canvas.height * 0.3,
+            this.canvas.width * 0.4,
             this.canvas.width / 2, this.canvas.height * 0.1,
-            'Добро пожаловать в «Код и магию»! Нажмите пробел, чтобы начать игру');
+            'Добро пожаловать в «Код и магию»! Нажмите пробел, чтобы начать игру.');
           break;
       }
     },
