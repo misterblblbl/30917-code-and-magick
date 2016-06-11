@@ -384,7 +384,7 @@
        */
       var drawMessageWindow = function(ctx, width, coordinateX, coordinateY, messageText) {
         ctx.font = '16px PT Mono';
-        var fontSize = parseInt(ctx.font);
+        var fontSize = parseInt(ctx.font, 10);
         var messageArr = calculateLines(messageText, fontSize, width * 0.85);
         var height = fontSize * 1.5 + fontSize * 2 * messageArr.length;
 

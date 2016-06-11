@@ -1,8 +1,6 @@
 'use strict';
 
 (function() {
-
-  var reviews = [];
   var reviewsFilters = document.querySelector('.reviews-filter');
   var reviewsContainer = document.querySelector('.reviews-list');
   var template = document.querySelector('#review-template');
@@ -44,7 +42,7 @@
     element.replaceChild(authorPhoto, element.querySelector('.review-author'));
     authorPhoto.classList.add('review-author');
 
-    var imageLoadTimeOut = setTimeout(function () {
+    var imageLoadTimeOut = setTimeout(function() {
       authorPhoto.src = '';
       element.classList.add('review-load-failure');
     }, IMAGE_LOAD_TIMEOUT);
@@ -54,7 +52,7 @@
   };
 
 
-  var loadJSONPData = function (url, callbackAfter, callbackBefore) {
+  var loadJSONPData = function(url, callbackAfter, callbackBefore) {
     if(typeof callbackBefore === 'function') {
       callbackBefore();
     }
@@ -67,7 +65,7 @@
       if(typeof callbackAfter === 'function') {
         callbackAfter(data);
       }
-    }
+    };
   };
 
   loadJSONPData('https://up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js', function(data) {
