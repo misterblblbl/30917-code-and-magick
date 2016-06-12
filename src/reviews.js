@@ -3,7 +3,7 @@
 (function() {
   var reviewsFilters = document.querySelector('.reviews-filter');
   var reviewsContainer = document.querySelector('.reviews-list');
-  var template = document.querySelector('#review-template');
+  var template = document.getElementById('review-template');
   var elementToClone;
 
   if('content' in template) {
