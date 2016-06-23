@@ -750,7 +750,68 @@
   window.Game = Game;
   window.Game.Verdict = Verdict;
 
-  var game = new Game(document.querySelector('.demo'));
+  var gameElement = document.querySelector('.demo');
+
+  var game = new Game(gameElement);
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
+
+  var clouds = document.querySelector('.header-clouds');
+  var header = document.querySelector('header');
+  var headerInitialPosition = header.getBoundingClientRect().top;
+  var headerPositionAfterScroll;
+  clouds.style.backgroundPositionX = '0px';
+  var previousPosition = parseInt(clouds.style.backgroundPositionX);
+  var THROTTLE_DELAY = 100;
+  var CLOUDS_SPEED = 3;
+
+
+  // Возвращает true при скролле вниз и false при скролле вверх
+  var getScrollDirection = function() {
+    headerPositionAfterScroll = header.getBoundingClientRect().top;
+    if(headerInitialPosition - headerPositionAfterScroll > 0) {
+      headerInitialPosition = headerPositionAfterScroll;
+      return true;
+    } else {
+      headerInitialPosition = headerPositionAfterScroll;
+      return false;
+    }
+  };
+
+  // Проверяет, виден ли блок
+  var isBlockVisible = function(element) {
+    var GAP = 150;
+    return window.innerHeight - GAP + element.getBoundingClientRect().top > 0;
+  };
+
+  var moveClouds = function(callback) {
+    var flag = callback();
+    if (flag) {
+      if (getScrollDirection()) {
+        previousPosition -= CLOUDS_SPEED;
+        clouds.style.backgroundPositionX = previousPosition + 'px';
+      } else {
+        previousPosition += CLOUDS_SPEED;
+        clouds.style.backgroundPositionX = previousPosition + 'px';
+      }
+    }
+  };
+
+  var lastCall = Date.now();
+
+  window.addEventListener('scroll', function() {
+    moveClouds(function() {
+      if(Date.now() - lastCall >= THROTTLE_DELAY) {
+        lastCall = Date.now();
+
+        //Остановить игру, если блок с игрой не виден
+        if(!isBlockVisible(gameElement)) {
+          game.setGameStatus(window.Game.Verdict.PAUSE);
+        }
+      } else {
+        return true;
+      }
+    });
+  });
+
 })();
