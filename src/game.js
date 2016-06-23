@@ -761,7 +761,7 @@
   var headerInitialPosition = header.getBoundingClientRect().top;
   var headerPositionAfterScroll;
   clouds.style.backgroundPositionX = '0px';
-  var previousPosition = parseInt(clouds.style.backgroundPositionX);
+  var previousPosition = parseInt(clouds.style.backgroundPositionX, 10);
   var THROTTLE_DELAY = 100;
   var CLOUDS_SPEED = 3;
 
@@ -808,6 +808,7 @@
         if(!isBlockVisible(gameElement)) {
           game.setGameStatus(window.Game.Verdict.PAUSE);
         }
+        return isBlockVisible(clouds);
       } else {
         return true;
       }
