@@ -71,8 +71,7 @@ var renderGallery = function(index) {
   } else if (currentIndex < 0) {
     currentIndex = images.length - 1;
   }
-  console.log(currentIndex);
-  showGallery();
+  
   image.src = images[currentIndex].src;
   imageContainer.appendChild(image);
   numberCurrent.innerHTML = currentIndex + 1;
@@ -80,6 +79,7 @@ var renderGallery = function(index) {
 numberTotal.innerHTML = images.length;
 
 galleryContainer.addEventListener('click', function(evt) {
+  showGallery();
   for(var i = 0; i < images.length; i++) {
     if(evt.target === images[i]) {
       renderGallery(i);
