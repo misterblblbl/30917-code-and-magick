@@ -71,7 +71,7 @@ var renderGallery = function(index) {
   } else if (currentIndex < 0) {
     currentIndex = images.length - 1;
   }
-  
+
   image.src = images[currentIndex].src;
   imageContainer.appendChild(image);
   numberCurrent.innerHTML = currentIndex + 1;

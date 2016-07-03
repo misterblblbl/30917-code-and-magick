@@ -1,5 +1,6 @@
 'use strict';
 
+/** @enum {string} */
 var Filter = {
   'ALL': 'reviews-all',
   'BAD': 'reviews-bad',
