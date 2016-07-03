@@ -2,6 +2,10 @@
 
 var Filter = require('./filters-list');
 
+/** Фильтрация отзывов
+ * @param {Array.<Object>} reviewsList
+ * @param {string} filter - применяемый фильтр
+ */
 var getFilteredReviews = function(reviewsList, filter) {
   var reviewsToFilter = reviewsList.slice(0);
 
@@ -29,7 +33,5 @@ var getFilteredReviews = function(reviewsList, filter) {
   }
   return reviewsToFilter;
 };
-
-
 
 module.exports = getFilteredReviews;

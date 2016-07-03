@@ -6,8 +6,13 @@ var REVIEWS_LOAD_URL = 'https://o0.github.io/assets/json/reviews.json';
 /** @constant {number} */
 var IMAGE_LOAD_TIMEOUT = 10000;
 
+/** @type {HTMLElement} */
 var reviewsBlock = document.querySelector('.reviews');
 
+/** Отрисовка отзывов на страницу
+ * @param {callback} callbackAfter - функция отрисовки, которая будет вызвана после загрузки отзывов
+ * @param {callback} callbackBefore - отобразить загрузчики
+ */
 var loadReviews = function(callbackAfter, callbackBefore) {
   if(typeof callbackBefore === 'function') {
     callbackBefore();

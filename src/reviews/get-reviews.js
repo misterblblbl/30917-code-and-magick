@@ -1,6 +1,6 @@
 'use strict';
 
-var reviewsContainer = document.querySelector('.reviews-list');
+/** @type {HTMLElement} */
 var template = document.getElementById('review-template');
 var elementToClone;
 
@@ -44,26 +44,7 @@ var getReviewElement = function(data) {
     element.classList.add('review-load-failure');
   }, IMAGE_LOAD_TIMEOUT);
 
-  reviewsContainer.appendChild(element);
   return element;
 };
 
-var renderReviews = function(reviewsToRender, page, pageSize) {
-  //reviewsContainer.innerHTML = '';
-
-  var from = page * pageSize;
-  var to = from + pageSize;
-
-  if(reviewsToRender.length) {
-    reviewsToRender.slice(from, to).forEach(function(review) {
-      getReviewElement(review);
-    });
-  } else {
-    var reviewsMessage = document.createElement('div');
-    reviewsMessage.textContent = 'Подходящие отзывы не найдены';
-    reviewsMessage.style.marginBottom = '30px';
-    reviewsContainer.appendChild(reviewsMessage);
-  }
-};
-
-module.exports = renderReviews;
+module.exports = getReviewElement;
