@@ -1,10 +1,5 @@
 'use strict';
-
-/** @constant {string} */
-var REVIEWS_LOAD_URL = 'https://o0.github.io/assets/json/reviews.json';
-
-/** @constant {number} */
-var IMAGE_LOAD_TIMEOUT = 10000;
+var Const = require('../constants');
 
 /** @type {HTMLElement} */
 var reviewsBlock = document.querySelector('.reviews');
@@ -29,8 +24,8 @@ var loadReviews = function(callbackAfter, callbackBefore) {
     reviewsBlock.classList.add('reviews-load-failure');
   };
 
-  xhr.timeout = IMAGE_LOAD_TIMEOUT;
-  xhr.open('GET', REVIEWS_LOAD_URL);
+  xhr.timeout = Const.IMAGE_LOAD_TIMEOUT;
+  xhr.open('GET', Const.REVIEWS_LOAD_URL);
   xhr.send();
 };
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var getReviewElement = require('./reviews/get-reviews');
+var getReviewElement = require('./get-reviews');
 
 /**
  * @param {Object} data

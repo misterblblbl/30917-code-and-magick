@@ -1,11 +1,11 @@
 'use strict';
 
+var Const = require('../constants');
+
 /** @type {HTMLElement} */
 var template = document.getElementById('review-template');
 var elementToClone;
 
-/** @constant {number} */
-var IMAGE_LOAD_TIMEOUT = 10000;
 
 if('content' in template) {
   elementToClone = template.content.querySelector('.review');
@@ -42,7 +42,7 @@ var getReviewElement = function(data) {
   var imageLoadTimeOut = setTimeout(function() {
     authorPhoto.src = '';
     element.classList.add('review-load-failure');
-  }, IMAGE_LOAD_TIMEOUT);
+  }, Const.IMAGE_LOAD_TIMEOUT);
 
   return element;
 };
