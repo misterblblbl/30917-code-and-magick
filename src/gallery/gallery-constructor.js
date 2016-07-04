@@ -33,7 +33,7 @@ var Gallery = function(images) {
       this.currentIndex = images.length - 1;
     }
 
-    this.image.src = images[this.currentIndex].src;
+    this.image.src = images[this.currentIndex];
     this.imageContainer.appendChild(this.image);
     this.numberCurrent.innerHTML = this.currentIndex + 1;
   };
