@@ -90,11 +90,21 @@ var setFilter = function(filter) {
   renderReviews(filteredReviews, pageNumber, Const.PAGE_SIZE);
 };
 
+//Проверить, сохранён ли последний примененный фильтр в localStorage, если да, то применить его
+//и подсветить инпут с выбранным фильтром
+var checkLastFilters = function() {
+  var lastFilter = localStorage.getItem('lastFilter') || DEFAULT_FILTER;
+  reviewsFilters.querySelector('#' + lastFilter).checked = true;
+  console.log(lastFilter);
+  setFilter(lastFilter);
+};
+
 // установить обработчик изменения фильтра
 var setFiltrationEnabled = function() {
   reviewsFilters.addEventListener('click', function(evt) {
     if(evt.target.name === 'reviews') {
       setFilter(evt.target.id);
+      localStorage.setItem('lastFilter', evt.target.id);
     }
   });
 };
@@ -116,6 +126,6 @@ showPreloader();
 loadReviews(function(loadedReviews) {
   reviews = loadedReviews;
   setFiltrationEnabled(true);
-  setFilter(DEFAULT_FILTER);
+  checkLastFilters();
 }, removePreloader()
 );
