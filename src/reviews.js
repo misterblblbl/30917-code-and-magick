@@ -3,7 +3,8 @@
 var loadReviews = require('./reviews/load-reviews');
 var Filter = require('./reviews/filters-list');
 var getFilteredReviews = require('./reviews/filters');
-var Review = require('./review');
+var Review = require('./reviews/review');
+var Const = require('./constants');
 
 /** @type {HTMLElement} */
 var reviewsFilters = document.querySelector('.reviews-filter');
@@ -28,9 +29,6 @@ var renderedReviews = [];
 
 /** @type {number} */
 var pageNumber = 0;
-
-/** @constant {number} */
-var PAGE_SIZE = 3;
 
 /** @constant {Filter} */
 var DEFAULT_FILTER = Filter.ALL;
@@ -89,7 +87,7 @@ var setFilter = function(filter) {
 
   filteredReviews = getFilteredReviews(reviews, filter);
   pageNumber = 0;
-  renderReviews(filteredReviews, pageNumber, PAGE_SIZE);
+  renderReviews(filteredReviews, pageNumber, Const.PAGE_SIZE);
 };
 
 // установить обработчик изменения фильтра
@@ -102,15 +100,15 @@ var setFiltrationEnabled = function() {
 };
 
 moreReviewsButton.onclick = function() {
-  var pagesCountLimit = Math.floor(filteredReviews.length / PAGE_SIZE);
+  var pagesCountLimit = Math.floor(filteredReviews.length / Const.PAGE_SIZE);
 
   if(pageNumber < pagesCountLimit - 1) {
     pageNumber++;
-    renderReviews(filteredReviews, pageNumber, PAGE_SIZE);
+    renderReviews(filteredReviews, pageNumber, Const.PAGE_SIZE);
   } else if (pageNumber === pagesCountLimit - 1) {
     moreReviewsButton.classList.add('invisible');
     pageNumber++;
-    renderReviews(filteredReviews, pageNumber, PAGE_SIZE);
+    renderReviews(filteredReviews, pageNumber, Const.PAGE_SIZE);
   }
 };
 
