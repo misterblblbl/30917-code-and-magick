@@ -41,6 +41,7 @@ var Gallery = function(images) {
   this.showGallery = function() {
     if(self.galleryOverlay.classList.contains('invisible')) {
       self.galleryOverlay.classList.remove('invisible');
+      document.body.style.overflowY = 'hidden';
     }
 
     document.addEventListener('keydown', self._onDocumentKeyDown);
@@ -51,6 +52,7 @@ var Gallery = function(images) {
 
   this.hideGallery = function() {
     self.galleryOverlay.classList.add('invisible');
+    document.body.style.overflowY = 'auto';
 
     document.removeEventListener('keydown', self._onDocumentKeyDown);
     self.closeOverlay.removeEventListener('click', self._onCloseClick);

@@ -95,7 +95,6 @@ var setFilter = function(filter) {
 var checkLastFilters = function() {
   var lastFilter = localStorage.getItem('lastFilter') || DEFAULT_FILTER;
   reviewsFilters.querySelector('#' + lastFilter).checked = true;
-  console.log(lastFilter);
   setFilter(lastFilter);
 };
 
