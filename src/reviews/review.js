@@ -26,10 +26,7 @@ var Review = function(data, container) {
   this.reviewQuizYes.addEventListener('click', this.onReviewClickYes);
   this.reviewQuizNo.addEventListener('click', this.onReviewClickNo);
 
-  this.remove = function() {
-    this.element.removeEventListener('click', this.onReviewClick);
-    this.element.parentNode.removeChild(this.element);
-  };
+  this.remove = this.remove.bind(this);
 };
 
 Review.prototype.onReviewClickYes = function() {
@@ -40,6 +37,11 @@ Review.prototype.onReviewClickYes = function() {
 Review.prototype.onReviewClickNo = function() {
   this.reviewQuizNo.classList.add('review-quiz-answer-active');
   this.reviewQuizYes.classList.remove('review-quiz-answer-active');
+};
+
+Review.prototype.remove = function() {
+  this.element.removeEventListener('click', this.onReviewClick);
+  this.element.parentNode.removeChild(this.element);
 };
 
 module.exports = Review;
