@@ -38,6 +38,10 @@ h2 {
   display: none !important;
 }
 
+.non-scrollable {
+  overflow-y: hidden;
+}
+
 header {
   position: relative;
 

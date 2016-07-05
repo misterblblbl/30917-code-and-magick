@@ -13,7 +13,18 @@ var Const = {
 
   PAGE_SIZE: 3,
 
-  REVIEWS_LOAD_URL: 'https://o0.github.io/assets/json/reviews.json'
+  REVIEWS_LOAD_URL: 'https://o0.github.io/assets/json/reviews.json',
+
+  GALLERY_REG_EXP: /#photo\/(\S+)/,
+
+  MIN_RATING: 3,
+
+  MY_BIRTHDAY_DATE: {
+    day: 9,
+    month: 5
+  },
+
+  DAYS_IN_MILISECONDS: 1000 * 60 * 60 * 24
 };
 
 module.exports = Const;
