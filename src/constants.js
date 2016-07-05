@@ -13,7 +13,9 @@ var Const = {
 
   PAGE_SIZE: 3,
 
-  REVIEWS_LOAD_URL: 'https://o0.github.io/assets/json/reviews.json'
+  REVIEWS_LOAD_URL: 'https://o0.github.io/assets/json/reviews.json',
+
+  GALLERY_REG_EXP: /#photo\/(\S+)/
 };
 
 module.exports = Const;

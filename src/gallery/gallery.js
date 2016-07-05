@@ -1,6 +1,8 @@
 'use strict';
 
 var Gallery = require('./gallery-constructor');
+var Const = require('../constants');
+var Utils = require('../utilities');
 
 /** @type {Array} */
 var photogalleryImages = document.querySelectorAll('.photogallery-image img');
@@ -14,14 +16,24 @@ var galleryContainer = document.querySelector('.photogallery');
 
 var gallery = new Gallery(images);
 
-galleryContainer.addEventListener('click', function(evt) {
-  var index = images.indexOf(evt.target.getAttribute('src'));
-  console.log(index);
-  if (index !== -1) {
+var renderGalleryOnLoad = function() {
+  var src = Utils.checkHash(Const.GALLERY_REG_EXP);
+  if(typeof src === 'string') {
+    gallery.renderGallery(src);
     gallery.showGallery();
-    gallery.renderGallery(index);
   }
-});
+};
+
+var renderGalleryOnClick = function(evt) {
+  evt.preventDefault();
+  var index = images.indexOf(evt.target.getAttribute('src'));
+  gallery.showGallery();
+  gallery.changeLocation(images[index]);
+};
+
+galleryContainer.addEventListener('click', renderGalleryOnClick);
+
+window.addEventListener('load', renderGalleryOnLoad);
 
 
 

@@ -6,6 +6,7 @@
  */
 
 var Const = require('../constants');
+var Utils = require('../utilities');
 
 var Gallery = function(images) {
   var self = this;
@@ -24,8 +25,16 @@ var Gallery = function(images) {
 
   this.numberTotal.innerHTML = images.length;
 
-  this.renderGallery = function(index) {
-    this.currentIndex = index;
+  this.changeLocation = function(src) {
+    window.location.hash = 'photo/' + src;
+  };
+
+  this.renderGallery = function(indexOrSrc) {
+    if(typeof indexOrSrc === 'string') {
+      this.currentIndex = images.indexOf(indexOrSrc);
+    } else if(typeof indexOrSrc === 'number') {
+      this.currentIndex = indexOrSrc;
+    }
 
     if(this.currentIndex > images.length - 1) {
       this.currentIndex = 0;
@@ -43,7 +52,6 @@ var Gallery = function(images) {
       self.galleryOverlay.classList.remove('invisible');
       document.body.style.overflowY = 'hidden';
     }
-
     document.addEventListener('keydown', self._onDocumentKeyDown);
     self.closeOverlay.addEventListener('click', self._onCloseClick);
     self.arrowLeft.addEventListener('click', self._onArrowLeft);
@@ -51,6 +59,7 @@ var Gallery = function(images) {
   };
 
   this.hideGallery = function() {
+    Utils.clearHash();
     self.galleryOverlay.classList.add('invisible');
     document.body.style.overflowY = 'auto';
 
@@ -58,6 +67,17 @@ var Gallery = function(images) {
     self.closeOverlay.removeEventListener('click', self._onCloseClick);
     self.arrowLeft.removeEventListener('click', self._onArrowLeft);
     self.arrowRight.removeEventListener('click', self._onArrowRight);
+  };
+
+  this._onHashChange = function() {
+    var matchedHash = Utils.checkHash(Const.GALLERY_REG_EXP);
+    if (matchedHash) {
+      self.changeLocation(matchedHash);
+      self.renderGallery(matchedHash);
+    } else {
+      self.hideGallery();
+      Utils.clearHash();
+    }
   };
 
   this._onDocumentKeyDown = function(evt) {
@@ -75,13 +95,14 @@ var Gallery = function(images) {
   };
 
   this._onArrowLeft = function() {
-    self.renderGallery(--self.currentIndex);
+    self.changeLocation(images[--self.currentIndex]);
   };
 
   this._onArrowRight = function() {
-    self.renderGallery(++self.currentIndex);
+    self.changeLocation(images[++self.currentIndex]);
   };
 
+  window.addEventListener('hashchange', self._onHashChange);
 };
 
 module.exports = Gallery;
