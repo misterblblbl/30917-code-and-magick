@@ -5,6 +5,7 @@ var Filter = require('./filters-list');
 /** Фильтрация отзывов
  * @param {Array.<Object>} reviewsList
  * @param {string} filter - применяемый фильтр
+ * @returns {Array.<Object>} - отфильтрованный массив с отзывами
  */
 var getFilteredReviews = function(reviewsList, filter) {
   var reviewsToFilter = reviewsList.slice(0);

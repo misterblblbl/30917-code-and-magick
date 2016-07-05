@@ -1,6 +1,7 @@
 'use strict';
 
-/** @enum {string} */
+/** Cписок возможных фильтров для отзывов
+ * @enum {string} */
 var Filter = {
   'ALL': 'reviews-all',
   'BAD': 'reviews-bad',

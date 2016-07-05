@@ -1,6 +1,10 @@
 'use strict';
 
-// Проанализировать параметры и вывести соответствующее сообщение-строку
+/**
+ * @param {boolean|number|Object} a
+ * @param {Object} b
+ * @return {string}
+ */
 function getMessage(a, b) {
   if (typeof a == 'boolean') {
     if(a) {
@@ -19,7 +23,12 @@ function getMessage(a, b) {
   }
 }
 
-// Получить сумму всех элементов массива
+
+/**
+ * Получить сумму всех элементов массива
+ * @param {Array} array
+ * @return {number}
+ */
 function getArraySum(array) {
   var arraySum = 0;
   for (var i = 0; i < array.length; i++) {
@@ -28,7 +37,12 @@ function getArraySum(array) {
   return arraySum;
 }
 
-// Получить сумму прозведений элементов двух массивов
+/**
+ * Получить сумму прозведений элементов двух массивов
+ * @param {Array} array1
+ *  * @param {Array} array2
+ * @return {number}
+ */
 function getArraysProduct(array1, array2) {
   var arraysProduct = 0;
   for (var i = 0; i < array1.length; i++) {

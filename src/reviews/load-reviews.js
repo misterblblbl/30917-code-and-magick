@@ -4,7 +4,7 @@ var Const = require('../constants');
 /** @type {HTMLElement} */
 var reviewsBlock = document.querySelector('.reviews');
 
-/** Отрисовка отзывов на страницу
+/** Загрузка отзывов
  * @param {callback} callbackAfter - функция отрисовки, которая будет вызвана после загрузки отзывов
  * @param {callback} callbackBefore - отобразить загрузчики
  */
