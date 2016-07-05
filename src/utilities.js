@@ -12,6 +12,14 @@ var Utils = {
     } else {
       return false;
     }
+  },
+
+  removeBodyScroll: function() {
+    document.body.classList.add('non-scrollable');
+  },
+
+  returnBodyScroll: function() {
+    document.body.classList.remove('non-scrollable');
   }
 };
 
