@@ -30,7 +30,7 @@ var Review = function(data, container) {
 
   this.remove = this.remove.bind(this);
 };
-/** 
+/**
  * Подсветить "Да" или "Нет" при голосовании, убрать подсветку с притивоположного варианта
  * */
 Review.prototype.onReviewClickYes = function() {

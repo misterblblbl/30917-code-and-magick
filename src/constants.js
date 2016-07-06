@@ -1,6 +1,6 @@
 'use strict';
 
-/** 
+/**
  * Объект со всеми используемыми константами
  * @enum {Object|number|string} */
 

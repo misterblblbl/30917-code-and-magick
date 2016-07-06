@@ -17,17 +17,17 @@ var Gallery = function(images) {
   /** @type {HTMLElement} */
   this.imageContainer = document.querySelector('.overlay-gallery-preview');
 
-  /** 
+  /**
    * Номер текущего изображения в галерее
    * @type {HTMLElement} */
   this.numberCurrent = document.querySelector('.preview-number-current');
 
-  /** 
+  /**
    * Всего изображений в галерее
    * @type {HTMLElement} */
   this.numberTotal = document.querySelector('.preview-number-total');
 
-  /** 
+  /**
    * Кнопка закрытия галереи
    * @type {HTMLElement} */
   this.closeOverlay = document.querySelector('.overlay-gallery-close');
@@ -71,7 +71,7 @@ var Gallery = function(images) {
 };
 
 /**
- * Отрисовка галереи. Принимает как параметр индекс адреса изображения в массиве 
+ * Отрисовка галереи. Принимает как параметр индекс адреса изображения в массиве
  * или строку с адресом изображения
  * @param {number|string} indexOrSrc
  */
@@ -159,7 +159,11 @@ Gallery.prototype._onCloseClick = function() {
  * @private
  */
 Gallery.prototype._onArrowLeft = function() {
-  this.changeLocation(this.images[--this.currentIndex]);
+  if (this.currentIndex < 0) {
+    this.currentIndex = this.images.length - 1;
+  } else {
+    this.changeLocation(this.images[--this.currentIndex]);
+  }
 };
 
 /**
@@ -167,7 +171,12 @@ Gallery.prototype._onArrowLeft = function() {
  * @private
  */
 Gallery.prototype._onArrowRight = function() {
-  this.changeLocation(this.images[++this.currentIndex]);
+  if(this.currentIndex + 1 > this.images.length - 1) {
+    this.currentIndex = 0;
+    this.changeLocation(this.images[this.currentIndex]);
+  } else {
+    this.changeLocation(this.images[++this.currentIndex]);
+  }
 };
 
 /**
@@ -178,9 +187,9 @@ Gallery.prototype._onDocumentKeyDown = function(evt) {
   if(evt.keyCode === Const.Keycodes.ESC) {
     this.hideGallery();
   } else if(evt.keyCode === Const.Keycodes.LEFT) {
-    this.changeLocation(this.images[--this.currentIndex]);
+    this._onArrowLeft();
   } else if(evt.keyCode === Const.Keycodes.RIGHT) {
-    this.changeLocation(this.images[++this.currentIndex]);
+    this._onArrowRight();
   }
 };
 

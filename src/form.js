@@ -43,7 +43,7 @@ var isLowRating;
 /** @type {Date} */
 var now = new Date();
 
-/** 
+/**
  * Проверка рейтинга, если рейтинг отрицательный, то значение переменной isLowRating устанавливается в true
  * */
 var checkRating = function() {
