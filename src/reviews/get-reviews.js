@@ -4,9 +4,11 @@ var Const = require('../constants');
 
 /** @type {HTMLElement} */
 var template = document.getElementById('review-template');
+
+/** @type {HTMLElement} */
 var elementToClone;
 
-
+// Проверяем, поддерживает ли браузер тег template
 if('content' in template) {
   elementToClone = template.content.querySelector('.review');
 } else {

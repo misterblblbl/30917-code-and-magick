@@ -1,6 +1,8 @@
 'use strict';
 
-/** @enum {Object} */
+/**
+ * Объект со всеми используемыми константами
+ * @enum {Object|number|string} */
 
 var Const = {
   Keycodes: {

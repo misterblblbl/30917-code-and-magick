@@ -108,6 +108,8 @@ var setFiltrationEnabled = function() {
   });
 };
 
+//Обработчик на кнопку подгрузки отзывов
+//Кнопка исчезает, когда все отзывы загружены
 moreReviewsButton.onclick = function() {
   var pagesCountLimit = Math.floor(filteredReviews.length / Const.PAGE_SIZE);
 
